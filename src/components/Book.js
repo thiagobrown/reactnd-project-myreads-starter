@@ -13,7 +13,7 @@ const Book = ({ book, onUpdateBook }) => {
                     <BookShelfChanger book={book} onUpdateBook={onUpdateBook} />
                 </div>
                 <div className="book-title">{book.title}</div>
-                <div className="book-authors">{book.authors.join(", ")}</div>
+                <div className="book-authors">{book.authors && book.authors.length > 1 ? book.authors.join(", ") : book.authors}</div>
             </div>
         </li>
     )
@@ -24,4 +24,4 @@ Book.propTypes = {
     onUpdateBook: PropTypes.func.isRequired
 }
 
-export default Book
+export default Book;

@@ -17,7 +17,7 @@ class BooksApp extends Component {
       this.setState({ books: books || []});
     }).catch(error => {
       this.setState({ books: []});
-    })
+    });
   }
 
   onUpdateBook = (book, shelf) => {
@@ -26,7 +26,7 @@ class BooksApp extends Component {
       this.setState(prevState => ({
         books: prevState.books.filter(b => b.id !== book.id).concat(book)
       }));
-    })
+    });
   }
 
   render() {
@@ -47,4 +47,4 @@ class BooksApp extends Component {
   }
 }
 
-export default BooksApp
+export default BooksApp;

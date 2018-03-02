@@ -38,4 +38,4 @@ ListBooks.propTypes = {
     onUpdateBook: PropTypes.func.isRequired
 }
 
-export default ListBooks
+export default ListBooks;

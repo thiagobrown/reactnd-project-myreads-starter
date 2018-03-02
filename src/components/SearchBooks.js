@@ -15,7 +15,7 @@ class SearchBooks extends Component {
     onSearch = (query) => {
         BooksAPI.search(query, 20).then((books) => {
             this.setState({ searchBooks: this.onChangeShelfSearchBooks(books) });
-        })
+        }).catch(error => this.setState({ searchBooks: [] }));
     }
 
     onChangeShelfSearchBooks = (searchBooks) => {
@@ -26,8 +26,8 @@ class SearchBooks extends Component {
                     if (searchBook.id === book.id) {
                         searchBook.shelf = book.shelf;
                     }
-                })
-            })
+                });
+            });
 
             return searchBooks;
         }
@@ -59,4 +59,4 @@ SearchBooks.propTypes = {
     onUpdateBook: PropTypes.func.isRequired
 }
 
-export default SearchBooks
+export default SearchBooks;

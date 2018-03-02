@@ -21,4 +21,4 @@ BookShelfChanger.propTypes = {
   onUpdateBook: PropTypes.func.isRequired
 }
 
-export default BookShelfChanger
+export default BookShelfChanger;
