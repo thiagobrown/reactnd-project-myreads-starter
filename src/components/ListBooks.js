@@ -9,7 +9,7 @@ const ListBooks = ({ books = [], onUpdateBook }) => {
     let titles = [];
 
     if (books) {
-        titles = Array.from(new Set(books.map(b => b.shelf)))
+        titles = Array.from(new Set(books.filter(book => book.shelf !== "none").map(book => book.shelf)))
     }
 
     return (

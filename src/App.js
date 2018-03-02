@@ -9,56 +9,24 @@ import './App.css'
 
 class BooksApp extends Component {
   state = {
-    listBooks: [],
-    listSearchBooks: []
+    books: []
   }
 
   componentDidMount() {
-    BooksAPI.getAll().then((resp) => {
-      if (resp) {
-        this.setState({
-          listBooks: resp,
-          listSearchBooks: []
-        })
-      }
+    BooksAPI.getAll().then((books) => {
+      this.setState({ books: books || []});
     }).catch(error => {
-      this.setState({ listBooks: [], listSearchBooks: [] })
+      this.setState({ books: []});
     })
   }
 
-  onSearchBooks = (query) => {
-    if (query) {
-      BooksAPI.search(query).then(resp => {
-        this.setState({
-          listSearchBooks: this.onUpdateSelfSearchBooks(resp)
-        })
-      }).catch(error => {
-        this.setState({ listSearchBooks: [] })
-      })
-    }
-  }
-
-  onUpdateSelfSearchBooks = (listSearchBooks) => {
-    if (Array.isArray(listSearchBooks)) {
-      return listSearchBooks
-    //   return listSearchBooks.map(searchBook => {
-    //     this.state.listBooks
-    //       .filter(book => searchBook.id === book.id)
-    //       .map(book => searchBook.shelf = book.shelf)
-
-    //     return searchBook
-    //   })
-    }
-
-    return []
-  }
-
   onUpdateBook = (book, shelf) => {
-    if (shelf) {
-      BooksAPI.update(book, shelf).then(res => {
-        book.shelf = shelf
-      })
-    }
+    BooksAPI.update(book, shelf).then(resp => {
+      book.shelf = shelf;
+      this.setState(prevState => ({
+        books: prevState.books.filter(b => b.id !== book.id).concat(book)
+      }));
+    })
   }
 
   render() {
@@ -66,13 +34,12 @@ class BooksApp extends Component {
       <div className="app">
         <Route exact path="/" render={() => (
           <ListBooks 
-            books={this.state.listBooks}
+            books={this.state.books}
             onUpdateBook={this.onUpdateBook} />
         )} />
-        <Route path="/search" render={({ history }) => (
+        <Route path="/search" render={() => (
           <SearchBooks
-            books={this.state.listSearchBooks}
-            onSearchBooks={this.onSearchBooks}
+            books={this.state.books}
             onUpdateBook={this.onUpdateBook} />
         )} />
       </div>
