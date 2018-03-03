@@ -3,14 +3,10 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import BookShelf from './BookShelf'
+import Loader from './Loader'
+import { shelfs } from './../utils/constants'
 
-const ListBooks = ({ books = [], onUpdateBook }) => {
-
-    let titles = [];
-
-    if (books) {
-        titles = Array.from(new Set(books.filter(book => book.shelf !== "none").map(book => book.shelf)))
-    }
+const ListBooks = ({ books = [], loading = false, onUpdateBook }) => {
 
     return (
         <div className="list-books">
@@ -18,13 +14,19 @@ const ListBooks = ({ books = [], onUpdateBook }) => {
                 <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-                <div>
-                    {titles.map(t => (
-                        <BookShelf key={t} title={t}
-                            books={books.filter(b => b.shelf === t)}
-                            onUpdateBook={onUpdateBook} />
-                    ))}
-                </div>
+                {
+                    loading
+                        ? <Loader />
+                        : (
+                            <div>
+                                {shelfs.map(s => (
+                                    <BookShelf key={s.shelf} title={s.title}
+                                        books={books.filter(book => book.shelf === s.shelf)}
+                                        onUpdateBook={onUpdateBook} />
+                                ))}
+                            </div>
+                        )
+                }
             </div>
             <div className="open-search">
                 <Link to="/search" />
@@ -35,6 +37,7 @@ const ListBooks = ({ books = [], onUpdateBook }) => {
 
 ListBooks.propTypes = {
     books: PropTypes.array,
+    loading: PropTypes.bool,
     onUpdateBook: PropTypes.func.isRequired
 }
 

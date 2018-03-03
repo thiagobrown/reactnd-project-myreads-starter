@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Redirect, Switch } from 'react-router-dom'
 
 import ListBooks from './components/ListBooks'
 import SearchBooks from './components/SearchBooks'
@@ -7,16 +7,18 @@ import * as BooksAPI from './utils/BooksAPI'
 
 import './App.css'
 
-class BooksApp extends Component {
+class App extends Component {
   state = {
-    books: []
+    books: [],
+    isLoading: false
   }
 
   componentDidMount() {
+    this.setState({ isLoading: true });
     BooksAPI.getAll().then((books) => {
-      this.setState({ books: books || []});
+      this.setState({ books: books || [], isLoading: false });
     }).catch(error => {
-      this.setState({ books: []});
+      this.setState({ books: [], isLoading: false });
     });
   }
 
@@ -32,19 +34,24 @@ class BooksApp extends Component {
   render() {
     return (
       <div className="app">
-        <Route exact path="/" render={() => (
-          <ListBooks 
-            books={this.state.books}
-            onUpdateBook={this.onUpdateBook} />
-        )} />
-        <Route path="/search" render={() => (
-          <SearchBooks
-            books={this.state.books}
-            onUpdateBook={this.onUpdateBook} />
-        )} />
+        <Switch>
+
+          <Route exact path="/" render={() => (
+            <ListBooks
+              books={this.state.books}
+              loading={this.state.isLoading}
+              onUpdateBook={this.onUpdateBook} />
+          )} />
+          <Route path="/search" render={() => (
+            <SearchBooks
+              books={this.state.books}
+              onUpdateBook={this.onUpdateBook} />
+          )} />
+          <Redirect to="/" />
+        </Switch>
       </div>
     )
   }
 }
 
-export default BooksApp;
+export default App;
