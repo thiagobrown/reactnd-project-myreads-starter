@@ -6,19 +6,26 @@ import BookShelfChanger from './../components/BookShelfChanger'
 
 describe('Testing BookShelfChanger Component', () => {
   let props = {
-    book: {
-      id: 1,
-      title: 'Book One',
-      authors: ['Authors One'],
-      imageLinks: { thumbnail: 'url/book/one' },
-      shelf: 'read'
-    },
+    book: {},
     onUpdateBook: jest.fn()
   }
 
   const wrapper = shallow(<BookShelfChanger {...props} />);
-  
+
   it('render correctly', () => {
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('check render when state changes', () => {
+    wrapper.setProps({
+      book: {
+        id: 1,
+        title: 'Book One',
+        authors: ['Authors One'],
+        imageLinks: { thumbnail: 'url/book/one' },
+        shelf: 'read'
+      },
+    });
     expect(wrapper).toMatchSnapshot();
   });
 });
