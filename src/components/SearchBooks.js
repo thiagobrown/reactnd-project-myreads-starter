@@ -28,12 +28,14 @@ class SearchBooks extends Component {
                     searchBooks: this.onChangeShelfSearchBooks(books),
                     isLoading: false
                 });
-            }).catch(error => this.setState({ searchBooks: [] }));
+            }).catch(error =>
+                this.setState({
+                    searchBooks: [],
+                    isLoading: false
+                })
+            );
         } else {
-            this.setState({
-                searchBooks: [],
-                isLoading: false
-            });
+            this.setState({ searchBooks: [] });
         }
     }
 

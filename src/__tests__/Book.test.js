@@ -10,7 +10,7 @@ describe('Testing Book Component', () => {
     book: {
       id: 1,
       title: 'Book One',
-      authors: ['Authors One'],
+      authors: ['Author One'],
       imageLinks: { thumbnail: 'url/book/one' },
       shelf: 'read'
     },
@@ -40,7 +40,57 @@ describe('Testing Book Component', () => {
 
   it('verify exists BookShelfChanger', () => {
     expect(wrapper.find(BookShelfChanger)).toBeTruthy();
-  })
+  });
+
+  it('check render when not exists props.book.imageLinks', () => {
+    wrapper.setProps({
+      book: {
+        id: 1,
+        title: 'Book One',
+        authors: ['Author One'],
+        shelf: 'read'
+      }
+    });
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('check render when not exists props.book.imageLinks.thumbnail', () => {
+    wrapper.setProps({
+      book: {
+        id: 1,
+        title: 'Book One',
+        authors: ['Author One'],
+        imageLinks: { },
+        shelf: 'read'
+      }
+    });
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('check render when not exists props.book.authors', () => {
+    wrapper.setProps({
+      book: {
+        id: 1,
+        title: 'Book One',
+        imageLinks: { thumbnail: 'url/book/one' },
+        shelf: 'read'
+      }
+    });
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it ('check render when there is only one author in props.book.authors', () => {
+    wrapper.setProps({
+      book: {
+        id: 1,
+        title: 'Book One',
+        authors: ['Author One', 'Author Two'],
+        imageLinks: { thumbnail: 'url/book/one' },
+        shelf: 'read'
+      }
+    });
+    expect(wrapper).toMatchSnapshot();
+  });
 });
 
 

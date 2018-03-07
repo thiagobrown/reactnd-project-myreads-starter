@@ -1,4 +1,4 @@
-exports[`Testing ListBooks Component check render when state changes 1`] = `
+exports[`Testing ListBooks Component check render when props changes 1`] = `
 ShallowWrapper {
   "length": 1,
   Symbol(enzyme.__root__): [Circular],

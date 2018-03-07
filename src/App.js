@@ -35,7 +35,6 @@ class App extends Component {
     return (
       <div className="app">
         <Switch>
-
           <Route exact path="/" render={() => (
             <ListBooks
               books={this.state.books}

@@ -20,7 +20,7 @@ describe('Testing ListBooks Component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('check render when state changes', () => {
+  it('check render when props changes', () => {
     wrapper.setProps({
       books: [
         {
@@ -44,12 +44,12 @@ describe('Testing ListBooks Component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('check component <Loader/> when state.loading change to true', () => {
+  it('check component <Loader/> when props.loading change to true', () => {
     wrapper.setProps({ loading: true });
     expect(wrapper.containsAllMatchingElements([<Loader />])).toEqual(true);
   });
 
-  it('check component <Loader/> when state.loading change to false', () => {
+  it('check component <Loader/> when props.loading change to false', () => {
     wrapper.setProps({ loading: false });
     expect(wrapper.containsAllMatchingElements([<Loader />])).toEqual(false);
   });

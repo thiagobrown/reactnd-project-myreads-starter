@@ -1,14 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 
 import BookShelfChanger from './../components/BookShelfChanger'
 
 describe('Testing BookShelfChanger Component', () => {
+  const onChange = jest.fn(); 
+  let book = {
+    id: 1,
+    title: 'Book One',
+    authors: ['Authors One'],
+    imageLinks: { thumbnail: 'url/book/one' },
+    shelf: 'read'
+  };
   let props = {
     book: {},
-    onUpdateBook: jest.fn()
-  }
+    onUpdateBook: onChange
+  };
 
   const wrapper = shallow(<BookShelfChanger {...props} />);
 
@@ -18,14 +26,13 @@ describe('Testing BookShelfChanger Component', () => {
 
   it('check render when state changes', () => {
     wrapper.setProps({
-      book: {
-        id: 1,
-        title: 'Book One',
-        authors: ['Authors One'],
-        imageLinks: { thumbnail: 'url/book/one' },
-        shelf: 'read'
-      },
+      book: book,
     });
     expect(wrapper).toMatchSnapshot();
+  });
+
+  it('should call change value none', () => {
+    wrapper.find('select').simulate('change', { target: { value: 'none' }});
+    expect(onChange).toBeCalledWith(book, 'none');
   });
 });
